@@ -44,8 +44,35 @@ def stress_test():
         test_one(a, b, expected)
 
 
+def generalizedGCD(num, arr):
+    '''
+    curr_gcd = 1
+    for d in range(2, min(arr)+1):
+        print('d={}'.format(d))
+        for n in arr[:num]:
+            if n % d != 0:
+                print('n={} % d={} != 0'.format(n, d))
+                break
+        else:
+            print('max(d={}, curr_gcd={})'.format(d, curr_gcd))
+            curr_gcd = max(d, curr_gcd)
+    return curr_gcd
+    '''
+    arr = arr[:num]
+    while len(arr) > 1:
+        a = arr.pop()
+        b = arr.pop()
+        arr.append(optimizedGCD(a, b))
+    return arr[0]
+
+
+def optimizedGCD(a, b):
+    a, b = min(a, b), max(a, b)
+    while True:
+        a, b = a % b, a
+        if a == 0:
+            return b
+
+
 if __name__ == "__main__":
-    # test()
-    # stress_test()
-    aa, bb = map(int, input().split())
-    print(gcd_optimized(aa, bb))
+    print('gcd={}'.format(generalizedGCD(5, [2,4,6,8,10])))
